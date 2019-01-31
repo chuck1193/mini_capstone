@@ -6,9 +6,18 @@ json.total product.total
 
   
 json.description product.description
-json.image_url product.image_url
 json.is_discounted product.is_discounted?
 json.in_stock product.in_stock?
+json.supplier_id product.supplier_id
+
+json.images do 
+  #image partial array
+  json.array! product.images, partial: 'api/images/image', as: :image
+end
+
+json.supplier do
+  json.partial! product.supplier, partial: "api/suppliers/supplier", as: :supplier #this partial is here becasue the supplier view is not in the product folder sp it goes api => suppliers => supplier
+end
 
 json.formatted do
   json.price number_to_currency(product.price)
