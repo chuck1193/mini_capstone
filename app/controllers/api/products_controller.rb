@@ -1,4 +1,6 @@
 class Api::ProductsController < ApplicationController
+before_action :authenticate_admin, except: [:index, :show]
+
   def index
     @products = Product.all
 
@@ -22,9 +24,6 @@ class Api::ProductsController < ApplicationController
     else
       @products = @products.order(:id)
     end
-
-
-
     render 'index.json.jbuilder'
   end
 
@@ -36,12 +35,13 @@ class Api::ProductsController < ApplicationController
                             description: params[:description],
                             supplier_id: params[:supplier_id]
                           )
-  if @product.save
-    render 'show.json.jbuilder'
-  else
-    render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+    if @product.save
+      render 'show.json.jbuilder'
+    else
+      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+    end
   end
-end
+
   def show
     product_id = params[:id]
     @product = Product.find(product_id)

@@ -1,1 +1,1 @@
-json.partial! @order, partial: 'order', as: :order
+json.partial! @order, partial: 'order', as: :order 

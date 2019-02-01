@@ -1,3 +1,3 @@
-class Api::ImagesController < ApplicationController
+class Api::ImagesController < ApplicationController 
   belongs_to :product
 end
